@@ -1,6 +1,8 @@
 from django.db import models
 
-class BaseModel(models.Model):
+# Create your models here.
+
+class BaseModel (models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -8,16 +10,16 @@ class BaseModel(models.Model):
         abstract = True
 
 class College(BaseModel):
-    college_name = models.CharField(max_length=150)
+    college_name = models.CharField(max_length=150, verbose_name="College")
 
-    def __str__(self):
+    def __str__(self) :
         return self.college_name
-
+    
 class Program(BaseModel):
-    prog_name = models.CharField(max_length=150)
+    prog_name = models.CharField(max_length=150, verbose_name="Program Name")
     college = models.ForeignKey(College, on_delete=models.CASCADE)
 
-    def __str__(self):
+    def __str__(self) :
         return self.prog_name
 
 class Organization(BaseModel):
@@ -30,18 +32,21 @@ class Organization(BaseModel):
 
 class Student(BaseModel):
     student_id = models.CharField(max_length=15)
-    lastname = models.CharField(max_length=25)
-    firstname = models.CharField(max_length=25)
-    middlename = models.CharField(max_length=25, blank=True, null=True)
+    lastname = models.CharField(max_length=25, verbose_name="Last Name")
+    firstname = models.CharField(max_length=25, verbose_name="First Name")
+    middlename = models.CharField(max_length=25, blank=True, null=True , verbose_name="Middle Name")
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f"{self.lastname}, {self.firstname}"
+    def __str__(self) -> str:
+        return f"{self.lastname}, {self.firstname} "
 
 class OrgMember(BaseModel):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     date_joined = models.DateField()
+    
+    def __str__(self) -> str:
+        return f"{self.student}"
 
-    def __str__(self):
-        return f"{self.student} - {self.organization.name}"
+
+

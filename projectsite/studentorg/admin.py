@@ -1,36 +1,49 @@
 from django.contrib import admin
+
+# Register your models here.
+
 from .models import College, Program, Organization, Student, OrgMember
 
-@admin.register(College)
-class CollegeAdmin(admin.ModelAdmin):
-    list_display = ("college_name",)  # Display college name in the list view
-    search_fields = ("college_name",)  # Search by college name
-
-@admin.register(Program)
-class ProgramAdmin(admin.ModelAdmin):
-    list_display = ("prog_name", "college")  # Show program name and associated college
-    search_fields = ("prog_name",)  # Search by program name
-
-@admin.register(Organization)
-class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ("name", "college", "description")  # Show organization details
-    search_fields = ("name",)  # Search by organization name
+admin.site.register(College)
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ("student_id", "lastname", "firstname", "middlename", "program")  # List relevant fields
-    search_fields = ("lastname", "firstname")  # Enable search by names
+    list_display = ("student_id", "lastname","firstname", "middlename", "program")
+    search_fields = ("lastname", "firstname","student_id","program__prog_name")
 
 @admin.register(OrgMember)
 class OrgMemberAdmin(admin.ModelAdmin):
-    list_display = ("student", "get_member_program", "organization", "date_joined")  # Show member details
-    search_fields = ("student__lastname", "student__firstname")  # Enable search by student name
-
+    list_display = ("student", "get_member_program", "organization","date_joined",)
+    search_fields = ("student__lastname", "student__firstname",)
+    
     def get_member_program(self, obj):
         try:
-            return obj.student.program  # Directly access the program related to the student
+            member = Student.objects.get(id=obj.student_id)
+            return member.program
         except Student.DoesNotExist:
             return None
 
-    get_member_program.short_description = 'Program'  # Set column name in admin interface
+@admin.register(Organization)
+class OrganizationAdmin(admin.ModelAdmin):
+    list_display = ("name","college","description")
+    search_fields = ("name","college__college_name","description")
 
+    def get_college(self, obj):
+        try:
+            college = College.objects.get(college_name=obj.college)
+            return college.college_name
+        except College.DoesNotExist:
+            return None
+
+@admin.register(Program)
+class ProgramAdmin(admin.ModelAdmin):
+    list_display = ("prog_name","get_college")
+    search_fields = ("prog_name","college__college_name")
+
+    def get_college(self, obj):
+        try:
+            college = College.objects.get(college_name=obj.college)
+            return college.college_name
+        except College.DoesNotExist:
+            return None
+    

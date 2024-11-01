@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <div class="content">
     <div class="container-fluid">
         <h4 class="page-title">Home</h4>
@@ -14,10 +12,9 @@
 
                     <div class="col-md-6">
                         <div class="card-body">
-                            <form action="" method="post" novalidate>
+                            <form class="" action="" method="post" novalidate>
                                 <p>Are you sure you want to delete "{{ object }}"?</p>
-                                {% csrf_token %}
-                                {% include 'includes/form.html' %}
+                            {% csrf_token %} {% include 'includes/form.html' %}
                                 <div class="form-group">
                                     <div class="col-md-12 col-sm-3">
                                         <button type="submit" class="btn btn-primary btn-rounded">Submit</button>
