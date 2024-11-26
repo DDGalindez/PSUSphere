@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from studentorg.views import HomePageView,Organizationlist,OrganizationCreateView,OrganizationUpdateView,OrganizationDeleteView, OrgMemberlist,OrgMemberCreateView,OrgMemberUpdateView,OrgMemberDeleteView,StudentList, StudentCreateView,StudentUpdateView,StudentDeleteView,ProgramList,ProgramCreateView,ProgramUpdateView,ProgramDeleteView,CollegeList,CollegeCreateView,CollegeUpdateView,CollegeDeleteView
+from studentorg.views import HomePageView,Organizationlist,OrganizationCreateView,OrganizationUpdateView,OrganizationDeleteView, OrgMemberlist,OrgMemberCreateView,OrgMemberUpdateView,OrgMemberDeleteView,StudentList, StudentCreateView,StudentUpdateView,StudentDeleteView,ProgramList,ProgramCreateView,ProgramUpdateView,ProgramDeleteView,CollegeList,CollegeCreateView,CollegeUpdateView,CollegeDeleteView,ChartView
 from studentorg import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePageView.as_view(), name='home'),
+    path('dashboard_chart', ChartView.as_view(), name='dashboard-chart'),
     path('organization_list', Organizationlist.as_view(), name='organization-list'),
     path('organization_list/add', OrganizationCreateView.as_view(), name='organization-add'),
     path('organization_list/<pk>', OrganizationUpdateView.as_view(), name='organization-update'),
