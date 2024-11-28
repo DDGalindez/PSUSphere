@@ -45,9 +45,9 @@
                                     <td>{{ object.name }}</td>
                                     <td>{{ object.college }}</td>
                                     <td>{{ object.description }}</td>
-                                    <td>
-                                        <a href="organization_list/{{ object.id }}">Edit</a>
-                                        <a href="organization_list/{{ object.id }}/delete" class="text-danger">Delete</a> </a>
+                                    <td >
+                                        <button class="btn btn-primary" onclick="location='organization_list/{{ object.id }}'" >Edit</button>
+                                        <button class="btn btn-danger" onclick="location='organization_list/{{ object.id }}/delete'" class="text-danger">Delete</button> </a>
                                     </td>
                                 </tr>
                                 {% empty %}
@@ -66,4 +66,5 @@
         </div>
     </div>
 </div>
+{% include "includes/message.html "%}
 {% endblock %}

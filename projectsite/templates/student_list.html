@@ -49,8 +49,8 @@
                                     <td>{{ object.middlename }}</td>
                                     <td>{{ object.program }}</td>
                                     <td>
-                                        <a href="student_list/{{ object.id }}">Edit</a>
-                                        <a href="student_list/{{ object.id }}/delete" class="text-danger">Delete</a> </a>
+                                        <button class="btn btn-primary" onclick="location='student_list/{{ object.id }}'" >Edit</button>
+                                        <button class="btn btn-danger" onclick="location='student_list/{{ object.id }}/delete'" class="text-danger">Delete</button> </a>
                                     </td>
                                 </tr>
                                 {% empty %}
@@ -69,4 +69,5 @@
         </div>
     </div>
 </div>
+{% include "includes/message.html "%}
 {% endblock %}

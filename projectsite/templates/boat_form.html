@@ -1,1 +1,53 @@
-<h4 class="card-title">{% if object %}Update Boat {% else %} Add Boat {% endif %}</h4>
+{% extends 'base.html' %}
+
+{% block content %}
+<h4 class="card-title">
+    {% if object %}
+        Update Boat
+    {% else %}
+        Add Boat
+    {% endif %}
+</h4>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">
+        {% if object %} Update {% else %} Create {% endif %}
+    </button>
+</form>
+
+<!-- Toast container -->
+<div id="toast-container" aria-live="polite" aria-atomic="true" style="position: fixed; bottom: 20px; right: 20px; z-index: 1050">
+    {% if messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                {% for message in messages %}
+                // Create a new toast element
+                const toastHTML = `
+                <div class="toast" role="alert" style="margin-bottom: 10px;" data-delay="3000">
+                    <div class="toast-header">
+                        <img src="{% static 'images/logo-mini.svg' %}" class="rounded mr-2" style="width: 25px; height: 25px;" alt="logo">
+                        <strong class="mr-auto">Django App</strong>
+                        <small>Just now</small>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        {{ message|escapejs }}
+                    </div>
+                </div>`;
+                // Append the toast to the toast container
+                document.getElementById('toast-container').insertAdjacentHTML('beforeend', toastHTML);
+                // Initialize and show the toast
+                const toastElement = document.getElementById('toast-container').lastElementChild;
+                const toast = new bootstrap.Toast(toastElement);
+                toast.show();
+                {% endfor %}
+            });
+        </script>
+    {% endif %}
+</div>
+
+{% endblock %}
