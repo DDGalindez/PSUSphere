@@ -1,6 +1,11 @@
 from django.db import models
 
 # Create your models here.
+class Boat(models.Model):
+    boat_name = models.CharField(max_length=150)
+    length = models.DecimalField(max_digits=10, decimal_places=2)
+    width = models.DecimalField(max_digits=10, decimal_places=2)
+    height = models.DecimalField(max_digits=10, decimal_places=2)
 
 class BaseModel (models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -38,7 +43,7 @@ class Student(BaseModel):
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"{self.lastname}, {self.firstname} "
+        return f"{self.lastname}, {self.firstname}"
 
 class OrgMember(BaseModel):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -47,6 +52,5 @@ class OrgMember(BaseModel):
     
     def __str__(self) -> str:
         return f"{self.student}"
-
 
 

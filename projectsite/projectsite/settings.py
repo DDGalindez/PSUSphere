@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-8wtpuzm%=mwifor5glm=2=^u4^u=41h9%=6v4_apy42hl53qf8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['Exia.pythonanywhere.com', 'localhost']
+ALLOWED_HOSTS = ['Exia.pythonanywhere.com','127.0.0.1', 'localhost']
 
 
 
@@ -50,8 +50,8 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware'
 ]
 
 ROOT_URLCONF = 'projectsite.urls'

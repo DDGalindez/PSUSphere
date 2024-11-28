@@ -16,14 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from studentorg.views import HomePageView,Organizationlist,OrganizationCreateView,OrganizationUpdateView,OrganizationDeleteView, OrgMemberlist,OrgMemberCreateView,OrgMemberUpdateView,OrgMemberDeleteView,StudentList, StudentCreateView,StudentUpdateView,StudentDeleteView,ProgramList,ProgramCreateView,ProgramUpdateView,ProgramDeleteView,CollegeList,CollegeCreateView,CollegeUpdateView,CollegeDeleteView,ChartView
+from studentorg.views import HomePageView,Organizationlist,OrganizationCreateView,OrganizationUpdateView,OrganizationDeleteView, OrgMemberlist,OrgMemberCreateView,OrgMemberUpdateView,OrgMemberDeleteView,StudentList, StudentCreateView,StudentUpdateView,StudentDeleteView,ProgramList,ProgramCreateView,ProgramUpdateView,ProgramDeleteView,CollegeList,CollegeCreateView,CollegeUpdateView,CollegeDeleteView,BoatCreateView,BoatUpdateView
 from studentorg import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePageView.as_view(), name='home'),
-    path('dashboard_chart', ChartView.as_view(), name='dashboard-chart'),
     path('organization_list', Organizationlist.as_view(), name='organization-list'),
     path('organization_list/add', OrganizationCreateView.as_view(), name='organization-add'),
     path('organization_list/<pk>', OrganizationUpdateView.as_view(), name='organization-update'),
@@ -44,6 +43,8 @@ urlpatterns = [
     path('college_list/add', CollegeCreateView.as_view(), name='college-add'),
     path('college_list/<pk>', CollegeUpdateView.as_view(), name='college-update'),
     path('college_list/<pk>/delete', CollegeDeleteView.as_view(), name='college-delete'),
+    path('boat_list/add', BoatCreateView.as_view(), name='boat-add'),
+    path('boat_list/<pk>', BoatUpdateView.as_view(), name='boat-update'),
     re_path(r'^login/$', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
 ]
