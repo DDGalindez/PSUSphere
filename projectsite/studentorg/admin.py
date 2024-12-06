@@ -1,39 +1,49 @@
 from django.contrib import admin
+
+# Register your models here.
+
 from .models import College, Program, Organization, Student, OrgMember
 
-# Register College
 admin.site.register(College)
 
-# Register Student
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ("student_id", "lastname", "firstname", "middlename", "program")
-    search_fields = ("lastname", "firstname", "student_id", "program__prog_name")
+    list_display = ("student_id", "lastname","firstname", "middlename", "program")
+    search_fields = ("lastname", "firstname","student_id","program__prog_name")
 
-# Register OrgMember
 @admin.register(OrgMember)
 class OrgMemberAdmin(admin.ModelAdmin):
-    list_display = ("student", "get_member_program", "organization", "date_joined")
-    search_fields = ("student__lastname", "student__firstname")
+    list_display = ("student", "program", "organization","date_joined",)
+    search_fields = ("student__lastname", "student__firstname",)
+    
+    def program(self, obj):
+        try:
+            member = Student.objects.get(id=obj.student_id)
+            return member.program
+        except Student.DoesNotExist:
+            return None
 
-    def get_member_program(self, obj):
-        return obj.student.program  # Assuming `student` is a ForeignKey to `Student`.
-
-    get_member_program.short_description = "Program"
-
-# Register Organization
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ("name", "college", "description")
-    search_fields = ("name", "college__college_name", "description")
-
-# Register Program
-@admin.register(Program)
-class ProgramAdmin(admin.ModelAdmin):
-    list_display = ("prog_name", "get_college")
-    search_fields = ("prog_name", "college__college_name")
+    list_display = ("name","college","description")
+    search_fields = ("name","college__college_name","description")
 
     def get_college(self, obj):
-        return obj.college.college_name  # Assuming `college` is a ForeignKey to `College`.
+        try:
+            college = College.objects.get(college_name=obj.college)
+            return college.college_name
+        except College.DoesNotExist:
+            return None
 
-    get_college.short_description = "College"
+@admin.register(Program)
+class ProgramAdmin(admin.ModelAdmin):
+    list_display = ("prog_name","college")
+    search_fields = ("prog_name","college__college_name")
+
+    def college(self, obj):
+        try:
+            college = College.objects.get(college_name=obj.college)
+            return college.college_name
+        except College.DoesNotExist:
+            return None
+    
