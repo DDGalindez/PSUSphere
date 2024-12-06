@@ -46,5 +46,6 @@ urlpatterns = [
     path('boat_list/add', BoatCreateView.as_view(), name='boat-add'),
     path('boat_list/<pk>', BoatUpdateView.as_view(), name='boat-update'),
     re_path(r'^login/$', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
+    re_path(r'^logout/$', auth_views.LogoutView.as_view(next_page='login.html'), name='logout'),
+
 ]
